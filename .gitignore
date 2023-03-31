@@ -1,6 +1,6 @@
 target
 
-webapp/src/main/resources/config/safeseed.properties
+#webapp/src/main/resources/config/safeseed.properties
 
 *.class
 

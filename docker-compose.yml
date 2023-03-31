@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  db:
+    image: cabias/upwork_jf93c0bac_db
+    build:
+      context: postgres-init/
+    container_name: upwork_jf93c0bac_db
+    ports:
+      - target: 5432
+        published: 5432
+    environment:
+      - POSTGRES_USER=safeseed
+      - POSTGRES_PASSWORD=PASSWORD
+      - POSTGRES_DB=safeseed
+#    volumes:
+#      - ${PWD}/postgres-init:/docker-entrypoint-initdb.d
+#      - ${PWD}/postgres-data:/var/lib/postgresql/data
+  backend:
+    image: cabias/upwork_jf93c0bac_backend
+    build:
+      context: .
+    container_name: upwork_jf93c0bac_backend
+    depends_on:
+      - db
+    ports:
+      - target: 9090
+        published: 9090
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/safeseed
+      - WAIT_HOSTS=db:5432
+
+
